@@ -44,12 +44,7 @@ export const setGovernmentById: any = createAsyncThunk(
         Object.entries(governement).forEach(([position, candidate]) => {
           newGovernement.push({ config_ref: id, position: Number(position), candidate: Number(candidate) })
         })
-        const res = await setGovernmentAPI(newGovernement)
-        logger({
-          message: '[setGovernmentById] unexpected response format',
-          context: { response: res }
-        })
-        throw new Error('Failed to parse server reponse')
+        await setGovernmentAPI(newGovernement)
       }
     } catch (error) {
       handleError({
