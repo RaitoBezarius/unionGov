@@ -27,7 +27,7 @@ class ConfigRef(models.Model):
     def __str__(self) -> str:
         return "{} on {}".format(self.config_ref, self.save_date)
 
-    def save(self, *args, **kwargs): 
+    def save(self, *args, **kwargs):
         if not self.config_ref:
             self.config_ref = get_new_ref()
 
@@ -38,7 +38,7 @@ class Candidate(models.Model):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     image_file = models.ImageField(upload_to='img', blank=True, null=True)
-    image_url = models.URLField(default="https://www.parrainages-primairepopulaire.fr/file/primaire_candidat_mystere.png")
+    image_url = models.URLField(null=True, blank=True)
 
     def __str__(self) -> str:
         return "{} {}".format(self.first_name, self.last_name)
@@ -62,8 +62,8 @@ class Config(models.Model):
 
 @receiver(pre_save, sender=Config)
 def check_config(sender, instance, **kwargs):
-    """ Returns True if both Position and Candidate are new, for this configRef 
-    
+    """ Returns True if both Position and Candidate are new, for this configRef
+
     If not True raises a custom exception
     """
     current_id = instance.id
