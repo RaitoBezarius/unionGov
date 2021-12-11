@@ -1,5 +1,6 @@
 import { Button, Typography, Dialog, DialogTitle } from '@material-ui/core';
 import { CSSProperties, FunctionComponent, memo } from 'react';
+import { FacebookShareButton, LinkedinShareButton, TwitterShareButton, FacebookIcon, LinkedinIcon, TwitterIcon } from 'react-share';
 import theme from '../../theme';
 
 export type Props = {
@@ -66,9 +67,20 @@ const ShareButton: FunctionComponent<Props> = memo(
         <Typography className="flex-fill text-center align-items-center justify-content-center d-flex" color="secondary">
           {shareLink}
         </Typography>
-        <Button style={{ margin: '0px 100px 20px 100px' }} variant="contained" color="primary" onClick={onCopy}>
-          Copier le lien
-        </Button>
+        <div className="row mx-auto pb-4 pt-4">
+          <Button variant="contained" color="primary" onClick={onCopy}>
+            Copier le lien
+          </Button>
+          <FacebookShareButton url={'github.com'} quote={'J\'ai fait mon gouvernement idéal, et vous, qu\'est ce que vous feriez ?'} hashtag="#primairepopulaire">
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+          <LinkedinShareButton title='Mon gouvernement idéal' summary={'J\'ai fait mon gouvernement idéal, et vous, qu\'est ce que vous feriez ? #primairepopulaire'} source={shareLink} url={shareLink}>
+            <LinkedinIcon size={32} round />
+          </LinkedinShareButton>
+          <TwitterShareButton title='Mon gouvernement idéal' via='UnionGov' hashtags={['primairepopulaire']} related={['PrimairePop']} url={shareLink}>
+            <TwitterIcon size={32} round />
+          </TwitterShareButton>
+        </div>
       </Dialog>
     </div>
   )
