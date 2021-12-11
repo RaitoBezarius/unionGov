@@ -7,22 +7,22 @@ import { fetchAllPositions } from '../redux/Positions/effects';
 import { allPositionIdsSelector } from '../redux/Positions/selectors';
 import { EmptyRecord } from '../types';
 import { fetchNewConfigRef } from '../redux/Config/effects';
-import {
-  useParams
-} from 'react-router-dom';
 import { fetchGovernmentById } from '../redux/Government/effects';
 import { setCandidateAction } from '../redux/Government/reducer';
 import { GovernmentState } from '../redux/Government/state';
+import { useRouter } from 'next/router';
 import endpoints from '../api/endpoints.config';
 
-const mkPermanentUrl = (id?: string) => id ? `${location.origin}/${id}` : location.origin;
+const baseUrl = process.env.FRONTEND_BASE_URL ?? '';
+const mkPermanentUrl = (id?: string) => id ? `${baseUrl}/${id}` : baseUrl;
 const mkThumbnailUrl = (id?: string) => id ? `${endpoints.ApiBaseUrl}/thumbnail/${id}` : '';
 
 /** Government screen entry */
 const Government: FunctionComponent<EmptyRecord> = () => {
   const positionIds = useAppSelector(allPositionIdsSelector, shallowEqual);
   const dispatch = useAppDispatch();
-  const params: { id?: string} = useParams();
+  const router = useRouter();
+  const params: { id?: string } = router.query;
 
   const items = useMemo(
     () => positionIds.map((positionId) => ({ positionId })),

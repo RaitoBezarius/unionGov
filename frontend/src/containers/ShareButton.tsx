@@ -11,7 +11,7 @@ import { ConfigState } from '../redux/Config/state';
 import { GovernmentState } from '../redux/Government/state';
 export type Props = EmptyRecord;
 
-const mkPrimaryLink = (id: number | undefined) => `${location.origin}/${id}`
+const mkPrimaryLink = (id: number | undefined) => `${process.env.FRONTEND_BASE_URL}/${id}`
 
 /**
  * ShareButton container

@@ -1,13 +1,17 @@
 import AppBar from '@material-ui/core/AppBar';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
+import { NextLinkComposed } from '../components/Link';
 import { FunctionComponent } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import Candidates from '../pages/Candidates';
-import Government from '../pages/Government';
-import { EmptyRecord } from '../types';
+import Candidates from '../pages/candidates';
+import Government from '../pages/government';
+import { withRouter, NextRouter } from 'next/router';
+
+interface WithRouterProps {
+  router: NextRouter;
+};
 
 function a11yProps (index: any) {
   return {
@@ -17,53 +21,32 @@ function a11yProps (index: any) {
 }
 
 const TABS = [
-  { label: 'gouvernement', ...a11yProps(0), path: '/' },
-  { label: 'personnalités', ...a11yProps(1), path: '/candidates' }
+  { label: 'gouvernement', ...a11yProps(0), to: '/' },
+  { label: 'personnalités', ...a11yProps(1), to: '/candidates' }
 ];
 
-const Navigation: FunctionComponent<EmptyRecord> = () => (
-  <Router>
-    <div className="flex-fill">
-      <AppBar position="static">
-        <Header />
-        <Route
-          render={({ history, location }) => (
-            <Tabs
-              value={location.pathname === '/candidates' ? 1 : 0}
-              onChange={(_, index) => {
-                if (typeof index === typeof 123 && TABS[index]) {
-                  history.push(TABS[index].path);
-                }
-              }}
-              variant="fullWidth"
-              scrollButtons="auto"
-              aria-label="scrollable auto tabs example"
-            >
-              {TABS.map((props) => (
-                <Tab key={`nav-tab-${props.label}`} {...props} />
-              ))}
-            </Tabs>
-          )}
-        />
-      </AppBar>
-      <div className="container-fluid min-vh-100">
-        <Switch>
-          <Route path="/candidates">
-            <Candidates />
-          </Route>
-          <Route path="/:id">
-            <Government />
-          </Route>
-          <Route path="/">
-            <Government />
-          </Route>
-        </Switch>
-      </div>
-      <div className="mt-4">
-        <Footer />
-      </div>
+const Navigation: FunctionComponent<WithRouterProps> = ({ router, children }) => (
+  <div className="flex-fill">
+    <AppBar position="static">
+      <Header />
+      <Tabs
+        value={router.pathname === '/candidates' ? 1 : 0}
+        variant="fullWidth"
+        scrollButtons="auto"
+        aria-label="scrollable auto tabs example"
+      >
+        {TABS.map((props) => (
+          <Tab key={`nav-tab-${props.label}`} component={NextLinkComposed} {...props} />
+        ))}
+      </Tabs>
+    </AppBar>
+    <div className="container-fluid min-vh-100">
+      {children}
     </div>
-  </Router>
+    <div className="mt-4">
+      <Footer />
+    </div>
+  </div>
 );
 
-export default Navigation;
+export default withRouter(Navigation);
