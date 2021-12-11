@@ -11,7 +11,7 @@ import { ConfigState } from '../redux/Config/state';
 import { GovernmentState } from '../redux/Government/state';
 export type Props = EmptyRecord;
 
-const PRIMARY_LINK = 'http://localhost:9000/'
+const mkPrimaryLink = (id: number | undefined) => `${location.origin}/${id}`
 
 /**
  * ShareButton container
@@ -29,12 +29,12 @@ const ShareButton: FunctionComponent<Props> = () => {
     setIsOpen(!isOpen)
     dispatch(setGovernmentById({ config, governement }))
     if (id) {
-      setShareLink(PRIMARY_LINK + id)
+      setShareLink(mkPrimaryLink(id))
     }
   }, [id, governement, isOpen]);
 
   const onCopy = useCallback(() => {
-    navigator.clipboard.writeText(PRIMARY_LINK + id)
+    navigator.clipboard.writeText(mkPrimaryLink(id))
   }, [id])
 
   return (
