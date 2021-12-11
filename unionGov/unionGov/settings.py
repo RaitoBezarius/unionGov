@@ -12,33 +12,29 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
-import dotenv
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # Recover secret variable from .env file
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
-    dotenv.load_dotenv(dotenv_file)
+    environ.Env.read_env(dotenv_file)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG'] == "True"
+DEBUG = env('DEBUG')
 
-API_HOST = os.environ['API_HOST']
-
-ALLOWED_HOSTS = [
-  f'{API_HOST}',
-  "Localhost"
-]
-
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
 
 # Application definition
 
@@ -91,14 +87,7 @@ WSGI_APPLICATION = 'unionGov.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
-    }
+    'default': env.db(default='postgres:///uniongov')
 }
 
 
@@ -139,18 +128,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 
-MEDIA_ROOT = BASE_DIR / 'static'
+MEDIA_ROOT = env('MEDIA_ROOT', default=(BASE_DIR / 'media'))
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000',
+    env('FRONTEND_URL', default='http://localhost:3000')
 ]
 
 DEFAULT_RENDERER_CLASSES = (
