@@ -13,6 +13,10 @@ import {
 import { fetchGovernmentById } from '../redux/Government/effects';
 import { setCandidateAction } from '../redux/Government/reducer';
 import { GovernmentState } from '../redux/Government/state';
+import endpoints from '../api/endpoints.config';
+
+const mkPermanentUrl = (id?: string) => id ? `${location.origin}/${id}` : location.origin;
+const mkThumbnailUrl = (id?: string) => id ? `${endpoints.ApiBaseUrl}/thumbnail/${id}` : '';
 
 /** Government screen entry */
 const Government: FunctionComponent<EmptyRecord> = () => {
@@ -45,7 +49,7 @@ const Government: FunctionComponent<EmptyRecord> = () => {
     return () => undefined;
   }, [])
 
-  return <Component items={items} />;
+  return <Component items={items} thumbnailURL={mkThumbnailUrl(params?.id)} permanentURL={mkPermanentUrl(params?.id)} />;
 };
 
 export default Government;
