@@ -11,14 +11,14 @@ export type Props = {
 } & SelectProps;
 
 type Styles = {
-  misteryItem: CSSProperties;
+  mysteryItem: CSSProperties;
   image: CSSProperties;
   reset: CSSProperties;
   resetIcon: CSSProperties;
 }
 
 const styles: Styles = {
-  misteryItem: {
+  mysteryItem: {
     backgroundColor: theme.palette.secondary.main,
     color: 'white',
     borderRadius: '100%',
@@ -48,7 +48,7 @@ const styles: Styles = {
 const GovernmentItem: FunctionComponent<Props> = memo(
   ({ imageUrl, positionName, onReset, ...props }) => (
     <li className="list-group-item d-flex justify-content-between align-items-center">
-      <div className="col pr-4">
+      <div className="col-11 pr-8">
         <Typography color={imageUrl ? 'primary' : undefined}>
           {positionName}
         </Typography>
@@ -62,7 +62,7 @@ const GovernmentItem: FunctionComponent<Props> = memo(
           <Typography
             align="center"
             variant="h6"
-            style={styles.misteryItem}
+            style={styles.mysteryItem}
             className={'justify-content-center align-items-center'}
           >
             ?
