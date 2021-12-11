@@ -3,6 +3,11 @@ import { CSSProperties, FunctionComponent, memo } from 'react';
 import { FacebookShareButton, LinkedinShareButton, TwitterShareButton, FacebookIcon, LinkedinIcon, TwitterIcon } from 'react-share';
 import theme from '../../theme';
 
+const SHARE_TITLE = 'Partagez votre gouvernement idéal !';
+const SHARE_HASHTAGS = ['PrimairePopulaire', 'PlusBelleLaPolitique', '2022AvecVous'];
+const SHARE_MESSAGE = 'La #démocratie ce n\'est pas seulement un président : signez l\'appel de la #PrimairePopulaire #PlusBelleLaPolitique #2022AvecVous';
+const SHARE_TWITTER_ACCOUNT = 'PrimairePop';
+
 export type Props = {
   isDisabled?: boolean;
   /** The number of positions still waiting for a user-candidate */
@@ -71,13 +76,13 @@ const ShareButton: FunctionComponent<Props> = memo(
           <Button variant="contained" color="primary" onClick={onCopy}>
             Copier le lien
           </Button>
-          <FacebookShareButton url={'github.com'} quote={'J\'ai fait mon gouvernement idéal, et vous, qu\'est ce que vous feriez ?'} hashtag="#primairepopulaire">
+          <FacebookShareButton url={'github.com'} quote={`${SHARE_TITLE}\n${SHARE_MESSAGE}`} hashtag={`#${SHARE_HASHTAGS[0]}`}>
             <FacebookIcon size={32} round />
           </FacebookShareButton>
-          <LinkedinShareButton title='Mon gouvernement idéal' summary={'J\'ai fait mon gouvernement idéal, et vous, qu\'est ce que vous feriez ? #primairepopulaire'} source={shareLink} url={shareLink}>
+          <LinkedinShareButton title={SHARE_TITLE} summary={SHARE_MESSAGE} source={shareLink} url={'github.com'}>
             <LinkedinIcon size={32} round />
           </LinkedinShareButton>
-          <TwitterShareButton title='Mon gouvernement idéal' via='UnionGov' hashtags={['primairepopulaire']} related={['PrimairePop']} url={shareLink}>
+          <TwitterShareButton title={`${SHARE_TITLE}\n${SHARE_MESSAGE}`} via={SHARE_TWITTER_ACCOUNT} related={[SHARE_TWITTER_ACCOUNT]} url={shareLink}>
             <TwitterIcon size={32} round />
           </TwitterShareButton>
         </div>
