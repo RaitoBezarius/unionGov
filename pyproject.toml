@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Union Governement backend app"
 authors = []
 license = "MIT"
+packages = [{ include = "unionGov", from = "unionGov" }, { include = "gov", from = "unionGov" }]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -16,6 +17,7 @@ psycopg2-binary = "^2.9.2"
 django-environ = "^0.8.1"
 pytz = "^2021.3"
 Pillow = "^8.4.0"
+gunicorn = "^20.1.0"
 
 [tool.poetry.dev-dependencies]
 

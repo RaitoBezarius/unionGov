@@ -11,4 +11,8 @@
       })
     ];
   };
+
+  app = (pkgs.poetry2nix.mkPoetryApplication {
+    projectDir = ./.;
+  }).dependencyEnv;
 }
