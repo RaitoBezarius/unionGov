@@ -1,0 +1,50 @@
+{
+    "agenix": {
+        "branch": "main",
+        "description": "age-encrypted secrets for NixOS",
+        "homepage": "",
+        "owner": "ryantm",
+        "repo": "agenix",
+        "rev": "57806bf7e340f4cae705c91748d4fdf8519293a9",
+        "sha256": "1pn2k3f0qx462pgpbdhhlypyck8lwnpm3l0dbzq1y6s0v33cwwjq",
+        "type": "tarball",
+        "url": "https://github.com/ryantm/agenix/archive/57806bf7e340f4cae705c91748d4fdf8519293a9.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "niv": {
+        "branch": "master",
+        "description": "Easy dependency management for Nix projects",
+        "homepage": "https://github.com/nmattia/niv",
+        "owner": "nmattia",
+        "repo": "niv",
+        "rev": "5830a4dd348d77e39a0f3c4c762ff2663b602d4c",
+        "sha256": "1d3lsrqvci4qz2hwjrcnd8h5vfkg8aypq3sjd4g3izbc8frwz5sm",
+        "type": "tarball",
+        "url": "https://github.com/nmattia/niv/archive/5830a4dd348d77e39a0f3c4c762ff2663b602d4c.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "npmlock2nix": {
+        "branch": "master",
+        "description": null,
+        "homepage": null,
+        "owner": "nix-community",
+        "repo": "npmlock2nix",
+        "rev": "ff17a3c59233911f776d8d462d61d82a3e41df34",
+        "sha256": "0l624gkkpn1r0g48b204k0wcqm9cwy5rzd5mnxwfjhyjj1wg4nl7",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/npmlock2nix/archive/ff17a3c59233911f776d8d462d61d82a3e41df34.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "raito-nur": {
+        "branch": "master",
+        "description": "All my Nix expressions",
+        "homepage": null,
+        "owner": "RaitoBezarius",
+        "repo": "nixexprs",
+        "rev": "23635a073e8d958107292b3207b60c979bd821e7",
+        "sha256": "0hvg1pvbwq3cwwjsxirvghnrs93idlqnn2vz7mwjvk7d3fi9xaaa",
+        "type": "tarball",
+        "url": "https://github.com/RaitoBezarius/nixexprs/archive/23635a073e8d958107292b3207b60c979bd821e7.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}
