@@ -134,6 +134,7 @@ img/
 
 # Node modules
 node_modules/
+node_modules.old/
 
 #postgresql persistent data
 data
@@ -145,3 +146,9 @@ data/db/*
 
 # Nextjs
 **/.next
+
+# SQLite
+*.sqlite
+
+# Nix
+result
