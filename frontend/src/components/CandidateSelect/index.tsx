@@ -44,7 +44,7 @@ const CandidateSelect: FunctionComponent<Props> = memo(({ current, options, onCh
   return (
     <Select<Option>
       placeholder="Choisis..."
-      options={options.sort(sortByLastName)}
+      options={options ? options.sort(sortByLastName) : options}
       onChange={handleChange}
       isOptionDisabled={isOptionDisabled}
       value={current || undefined}
