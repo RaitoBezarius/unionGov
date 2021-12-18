@@ -1,13 +1,13 @@
 import { Typography } from '@material-ui/core';
 import { FunctionComponent, memo } from 'react';
-import { Helmet } from 'react-helmet'
+import Head from 'next/head';
 import Item, { Props as ItemProps } from '../../containers/GovernmentItem';
 import ShareButton from '../../containers/ShareButton';
 
 export type Props = {
   items?: ItemProps[];
-  permanentURL: string;
-  thumbnailURL: string;
+  permanentURL?: string;
+  thumbnailURL?: string;
 };
 
 const EMPTY_ITEMS: NonNullable<Props['items']> = [];
@@ -15,14 +15,14 @@ const EMPTY_ITEMS: NonNullable<Props['items']> = [];
 /** @TODO handle loading state (placeholders would be great) */
 const Government: FunctionComponent<Props> = memo(({ items = EMPTY_ITEMS, thumbnailURL, permanentURL }) => (
   <div className="container mt-4 p-0 justify-content-center">
-    <Helmet>
+    <Head>
       <meta property="og:title" content="Mon gouvernement idéal !"/>
       <meta property="og:type" content="website"/>
-      <meta property="og:url" content={permanentURL} />
-      <meta property="og:image" content={thumbnailURL} />
+      {permanentURL && <meta property="og:url" content={permanentURL} />}
+      {thumbnailURL && <meta property="og:image" content={thumbnailURL} />}
       <meta property="og:description" content="Composez vous aussi votre gouvernement idéal !"/>
       <meta property="og:site_name" content="UnionGov" />
-    </Helmet>
+    </Head>
     <Typography variant="body1" className="flex-fill text-center pb-4" color="textSecondary">
       Compose ton gouvernement et fais le tourner sur les réseaux pour soutenir la cause !
     </Typography>
