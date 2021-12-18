@@ -13,7 +13,7 @@ import { GovernmentState } from '../redux/Government/state';
 import { useRouter } from 'next/router';
 import endpoints from '../api/endpoints.config';
 
-const baseUrl = process.env.FRONTEND_BASE_URL ?? '';
+const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL ?? '';
 const mkPermanentUrl = (id?: string) => id ? `${baseUrl}/${id}` : baseUrl;
 const mkThumbnailUrl = (id?: string) => id ? `${endpoints.ApiBaseUrl}/thumbnail/${id}` : '';
 
