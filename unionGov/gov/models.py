@@ -43,6 +43,11 @@ class Candidate(models.Model):
     def __str__(self) -> str:
         return "{} {}".format(self.first_name, self.last_name)
 
+    def save(self, *args, **kwargs):
+        if self.image_url is None:
+            self.image_url = self.image_file.url
+        super().save(*args, **kwargs)
+
 
 class Position(models.Model):
     position_name = models.CharField(max_length=128)
