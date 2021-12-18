@@ -3,6 +3,7 @@ import Select, { defaultTheme } from 'react-select';
 import handleError from '../../lib/error';
 import { Candidate } from '../../redux/Candidates/state';
 import theme from '../../theme';
+import { sortByLastName } from '../../lib/sort';
 
 type Option = {
   id: Candidate['id'];
@@ -43,7 +44,7 @@ const CandidateSelect: FunctionComponent<Props> = memo(({ current, options, onCh
   return (
     <Select<Option>
       placeholder="Choisis..."
-      options={options}
+      options={options.sort(sortByLastName)}
       onChange={handleChange}
       isOptionDisabled={isOptionDisabled}
       value={current || undefined}
