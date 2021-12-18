@@ -5,11 +5,11 @@ let
 in
 {
   frontend = {
-    nextDir = npmlock2nix.build {
+    nextDir = { env ? {} }: npmlock2nix.build ({
       src = ./frontend;
       installPhase = "cp -r .next $out";
       buildCommands = [ "npm run build" ];
-    };
+    } // env);
 
     nodeModules = npmlock2nix.node_modules {
       src = ./frontend;
@@ -29,9 +29,23 @@ in
     ];
   };
 
-  backend = {
+  backend = rec {
     package = (pkgs.poetry2nix.mkPoetryApplication {
       projectDir = ./.;
     }).dependencyEnv;
+
+    static = pkgs.stdenv.mkDerivation {
+      pname = "uniongov-backend-static";
+      version = "1.0.0";
+      phases = [ "buildPhase" ];
+
+      SECRET_KEY = "fake";
+      DJANGO_SETTINGS_MODULE = "unionGov.settings";
+      STATIC_ROOT = "$out";
+
+      buildPhase = ''
+        ${package}/bin/django-admin collectstatic --no-input
+      '';
+    };
   };
 }
