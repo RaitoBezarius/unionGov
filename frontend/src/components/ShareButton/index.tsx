@@ -76,10 +76,10 @@ const ShareButton: FunctionComponent<Props> = memo(
           <Button variant="contained" color="primary" onClick={onCopy}>
             Copier le lien
           </Button>
-          <FacebookShareButton url={'github.com'} quote={`${SHARE_TITLE}\n${SHARE_MESSAGE}`} hashtag={`#${SHARE_HASHTAGS[0]}`}>
+          <FacebookShareButton url={shareLink} quote={`${SHARE_TITLE}\n${SHARE_MESSAGE}`} hashtag={`#${SHARE_HASHTAGS[0]}`}>
             <FacebookIcon size={32} round />
           </FacebookShareButton>
-          <LinkedinShareButton title={SHARE_TITLE} summary={SHARE_MESSAGE} source={shareLink} url={'github.com'}>
+          <LinkedinShareButton title={SHARE_TITLE} summary={SHARE_MESSAGE} source={shareLink} url={shareLink}>
             <LinkedinIcon size={32} round />
           </LinkedinShareButton>
           <TwitterShareButton title={`${SHARE_TITLE}\n${SHARE_MESSAGE}`} via={SHARE_TWITTER_ACCOUNT} related={[SHARE_TWITTER_ACCOUNT]} url={shareLink}>
