@@ -11,10 +11,11 @@ export type Props = Omit<ComponentProps, 'options' | 'current' | 'onChange'> & {
   positionId: Position['id'];
 };
 
+const SOMEONE_ELSE = 'Quelqu\'un d\'autre';
 const mapCandidateToOption = ({ id, firstName, lastName }: Candidate): NonNullable<ComponentProps['options']>[0] => ({
   id,
   label: `${firstName} ${lastName}`,
-  isDisabled: true
+  isDisabled: `${firstName} ${lastName}` !== SOMEONE_ELSE
 })
 
 const mapCandidatesToOptions = (
