@@ -2,6 +2,7 @@ import { Link, Typography } from '@material-ui/core';
 import { CSSProperties, FunctionComponent, memo } from 'react';
 import theme from '../../theme';
 import { EmptyRecord } from '../../types';
+import NextLink from 'next/link';
 
 type Styles = {
   container: CSSProperties;
@@ -26,10 +27,7 @@ const Footer: FunctionComponent<EmptyRecord> = memo(() => (
       </Typography>
 
       <Typography className="mt-3 flex-fill" align="center">
-        <Link rel="noopener" href="http://mariecasays.com/">
-          Marie Casaÿs
-        </Link>{' '}
-        a réalisé les illustrations des candidat·e·s.
+        Vous pouvez voir les crédits à <NextLink href='/credits'>cette page</NextLink>.
       </Typography>
 
       <Typography className="mt-3 flex-fill" align="center">
