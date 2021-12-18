@@ -127,6 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = env('STATIC_ROOT', default=(BASE_DIR / 'static'))
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = env('MEDIA_ROOT', default=(BASE_DIR / 'media'))
@@ -138,6 +139,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
     env('FRONTEND_URL', default='http://localhost:3000')
 ]
+
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 
 DEFAULT_RENDERER_CLASSES = (
     'rest_framework.renderers.JSONRenderer',
