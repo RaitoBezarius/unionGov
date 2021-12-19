@@ -1,5 +1,3 @@
-# Union Gouv est une initiative de [Plus Belle la Politique](https://plusbellelapolitique.fr/)
-
 **Idée originale** : [Charlotte Marchandise](https://charlotte-marchandise.fr) et Archipel des Solidarités et de l'Écologie
 
 https://archipel.ecolosolidaire.org/
@@ -25,7 +23,7 @@ Crédits photos :
 Charlotte Marchandise : https://charlotte-marchandise.fr/
 yannick Jadot : https://fr.wikipedia.org/wiki/Yannick_Jadot#/media/Fichier:Yannick_Jadot_against_Miguel_Canete_(15395546666)_(cropped).jpg
 Christiane Taubira : https://fr.wikipedia.org/wiki/Christiane_Taubira#/media/Fichier:Christiane_Taubira_par_Claude_Truong-Ngoc_juin_2013.jpg
-Jean-Luc Mélenchon : https://fr.wikipedia.org/wiki/Jean-Luc_M%C3%A9lenchon#/media/Fichier:Jean_Luc_MELENCHON_in_the_European_Parliament_in_Strasbourg,_2016_(cropped).jpg
+Jean-Luc Mélenprout : https://fr.wikipedia.org/wiki/Jean-Luc_M%C3%A9lenchon#/media/Fichier:Jean_Luc_MELENCHON_in_the_European_Parliament_in_Strasbourg,_2016_(cropped).jpg
 Anne Hidalgo : https://fr.wikipedia.org/wiki/Anne_Hidalgo#/media/Fichier:Anne_Hidalgo_en_2016_lors_de_l'inauguration_du_nouvel_am%C3%A9nagement_des_Halles_(cropped).jpg
 Clémentine Autain : ttps://fr.wikipedia.org/wiki/Cl%C3%A9mentine_Autain#/media/Fichier:Clementine-Autain.jpg
 Pierre Larrouturou : https://fr.wikipedia.org/wiki/Pierre_Larrouturou#/media/Fichier:Europe_Ecologie_92_regional_elections_2010-02-05_n03.jpg
