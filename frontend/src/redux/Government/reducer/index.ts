@@ -19,10 +19,7 @@ const governmentSlice = createSlice({
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
-      return {
-        ...state,
-        ...action.payload.government
-      };
+      return action.payload.government; // Ignore client data until the next action.
     }
   }
 })

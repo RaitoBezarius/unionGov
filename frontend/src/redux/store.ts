@@ -26,6 +26,6 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 
-export const wrapper = createWrapper<Store<RootState>>(makeStore, {debug: true});
+export const wrapper = createWrapper<Store<RootState>>(makeStore, {debug: !!process.env.NEXT_PUBLIC_DEBUG_REDUX});
 
 export type AppDispatch = typeof store.dispatch;
