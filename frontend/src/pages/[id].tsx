@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { fetchAllCandidates } from '../redux/Candidates/effects';
 import { fetchAllPositions } from '../redux/Positions/effects';
 import { allPositionIdsSelector } from '../redux/Positions/selectors';
-import { EmptyRecord } from '../types';
 import { fetchGovernmentById } from '../redux/Government/effects';
 import { setCandidateAction } from '../redux/Government/reducer';
 import { GovernmentState } from '../redux/Government/state';
@@ -21,11 +20,15 @@ const mkThumbnailUrl = (id?: string) =>
   id ? `${endpoints.ApiBaseUrl}/thumbnail/${id}` : '';
 
 interface IParams extends ParsedUrlQuery {
-  id?: string;
+  id: string;
 }
 
 interface ConfigRef {
   id: number;
+};
+
+interface GovernmentProps {
+  hydrated?: boolean;
 };
 
 async function loadGovernmentData (dispatch: AppDispatch, id?: string) {
@@ -49,7 +52,7 @@ async function loadGovernmentData (dispatch: AppDispatch, id?: string) {
 export const getStaticProps: GetStaticProps = wrapper.getStaticProps(
   store => async ({ params }) => {
     await loadGovernmentData(store.dispatch, (params as IParams).id);
-    return { props: {} };
+    return { props: { hydrated: true } };
   }
 );
 
@@ -69,28 +72,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 /** Government screen entry */
-const Government: FunctionComponent<EmptyRecord> = () => {
+const Government: FunctionComponent<GovernmentProps> = ({ hydrated }) => {
   const positionIds = useAppSelector(allPositionIdsSelector, shallowEqual);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const params: { id?: string } = router.query;
+  const params: { id: string } = (router.query as IParams);
 
   const items = useMemo(() => positionIds.map(positionId => ({ positionId })), [
     positionIds
   ]);
 
-  // <=> componentDidMount
   useEffect(() => {
-    loadGovernmentData(dispatch, params?.id);
-    // cleanup function called when component is unmounted
-    return () => undefined;
-  }, []);
+    if (!hydrated) loadGovernmentData(dispatch, params.id);
+  }, [params.id]);
 
   return (
     <Component
       items={items}
-      thumbnailURL={mkThumbnailUrl(params?.id)}
-      permanentURL={mkPermanentUrl(params?.id)}
+      thumbnailURL={mkThumbnailUrl(params.id)}
+      permanentURL={mkPermanentUrl(params.id)}
     />
   );
 };
