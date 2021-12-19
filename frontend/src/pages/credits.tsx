@@ -11,7 +11,7 @@ export async function getStaticProps () {
 }
 
 const Credits: FunctionComponent<EmptyRecord> = ({ text }) => {
-  return (<Markdown>{text}</Markdown>);
+  return (<Markdown style={{paddingTop: '15px', paddingLeft: '10px'}}>{text}</Markdown>);
 };
 
 export default Credits;
