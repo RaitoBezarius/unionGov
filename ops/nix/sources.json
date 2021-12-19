@@ -41,10 +41,10 @@
         "homepage": null,
         "owner": "RaitoBezarius",
         "repo": "nixexprs",
-        "rev": "82fdd620db8120b027ad1079ddf2783297815ba1",
-        "sha256": "0xzdpdxi73kipdg558g16z23xvlp2yh7vwbhfc55d7byhgwjrrk3",
+        "rev": "04341b8a816c0a0be33219119494bd5edfd21255",
+        "sha256": "0fpd777hg58skbr4837wax7jzkbh2lg3cp1s6hp24i05rrxl03kf",
         "type": "tarball",
-        "url": "https://github.com/RaitoBezarius/nixexprs/archive/82fdd620db8120b027ad1079ddf2783297815ba1.tar.gz",
+        "url": "https://github.com/RaitoBezarius/nixexprs/archive/04341b8a816c0a0be33219119494bd5edfd21255.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
