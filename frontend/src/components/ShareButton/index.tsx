@@ -5,7 +5,7 @@ import theme from '../../theme';
 
 const SHARE_TITLE = 'Partagez votre gouvernement idéal !';
 const SHARE_HASHTAGS = ['PrimairePopulaire', 'PlusBelleLaPolitique', '2022AvecVous'];
-const SHARE_MESSAGE = 'La #démocratie ce n\'est pas seulement un président : signez l\'appel de la #PrimairePopulaire #PlusBelleLaPolitique #2022AvecVous';
+const SHARE_MESSAGE = 'La #démocratie ce n\'est pas seulement un.e président.e : signez l\'appel de la #PrimairePopulaire #PlusBelleLaPolitique #2022AvecVous';
 const SHARE_TWITTER_ACCOUNT = 'PrimairePop';
 
 export type Props = {
