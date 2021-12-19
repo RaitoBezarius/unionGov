@@ -32,7 +32,7 @@ const Footer: FunctionComponent<EmptyRecord> = memo(() => (
 
       <Typography className="mt-3 flex-fill" align="center">
         Les contributions (en code !) pour ce site sont les bienvenues, voir le{' '}
-        <Link rel="noopener" href="https://github.com/primairepopulaire/unionGov">
+        <Link rel="noopener" href="https://github.com/RaitoBezarius/unionGov">
           dépôt GitHub
         </Link>{' '}
          associé.
