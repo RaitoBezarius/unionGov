@@ -152,3 +152,4 @@ data/db/*
 
 # Nix
 result
+.direnv
