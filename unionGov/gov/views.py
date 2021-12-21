@@ -53,7 +53,7 @@ class XConfigAPIView(viewsets.ReadOnlyModelViewSet):
 class ConfigRefAPIView(viewsets.ModelViewSet):
     # Get only a reference
     http_method_names = [m for m in viewsets.ModelViewSet.http_method_names
-                         if m in ('post')]
+                         if m in ('get', 'post')]
     serializer_class = ConfigRefSerializer
     queryset = ConfigRef.objects.all()
     filter_backends = [DjangoFilterBackend]
