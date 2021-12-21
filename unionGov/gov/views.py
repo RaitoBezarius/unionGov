@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
 
@@ -82,3 +83,8 @@ class CandidateListView(ListView):
 def candidate(request, candidate_id):
     candidate = get_object_or_404(Candidate, pk=candidate_id)
     return render(request, 'gov/candidate.html', {'candidate': candidate})
+
+def generate_gov_thumbnail(request, gov_id):
+    # TODO: use PIL to perform collage based on the selected government.
+    # cache the resulting image.
+    return HttpResponse(status=400)
