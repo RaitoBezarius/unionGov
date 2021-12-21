@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "UnionGov",
+  "name": "UnionGov - composez votre gouvernement !",
   "icons": [
     {
       "src": "favicon.ico",
