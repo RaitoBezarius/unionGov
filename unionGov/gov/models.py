@@ -93,7 +93,7 @@ def check_config(sender, instance, **kwargs):
     current_candidate = instance.candidate
     current_position = instance.position
 
-    if current_config_ref.updated_at - timezone.now() < timedelta(minutes=GRACE_PERIOD_BETWEEN_FREEZE):
+    if current_config_ref.updated_at - timezone.now() > timedelta(minutes=GRACE_PERIOD_BETWEEN_FREEZE):
         raise ValidationError("Frozen government, cannot modify")
 
     # Get existing Config rows
