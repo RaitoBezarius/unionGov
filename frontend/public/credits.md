@@ -6,20 +6,20 @@
 
 - [Jacques-Olivier Farcy](https://mapwa.net/static/)
 
-
 ## Développeurs
 
 ### Backend, frontend, mise en ligne, hébergement
 
-* [Ryan Lahfa](https://ryan.lahfa.xyz/about-me.html)
+- [Ryan Lahfa](https://ryan.lahfa.xyz/about-me.html)
 
 ### Backend et frontend
 
-* [Sattisvar](https://github.com/sattisvar)
-* [Trivy@SoGar-code](https://github.com/SoGar-code)
-* [dydyF05](https://github.com/dydyF05)
-* [MazDaMad](https://github.com/MazDaMada)
-* [Cantenej](https://github.com/cantenej/)
+- [Sattisvar](https://github.com/sattisvar)
+- [Trivy@SoGar-code](https://github.com/SoGar-code)
+- [dydyF05](https://github.com/dydyF05)
+- [MazDaMad](https://github.com/MazDaMada)
+- [Cantenej](https://github.com/cantenej)
+- [yvan-sraka](https://github.com/yvan-sraka)
 
 ## Source des photos
 
@@ -43,12 +43,3 @@
 - Christiane Taubira : <https://fr.wikipedia.org/wiki/Christiane_Taubira#/media/Fichier:Christiane_Taubira_par_Claude_Truong-Ngoc_juin_2013.jpg>
 - Marie Toussaint : <https://fr.wikipedia.org/wiki/Marie_Toussaint#/media/Fichier:20210821_toussaint.marie_6640b.jpg>
 - Najat Vallaud-Belkacem : <https://fr.wikipedia.org/wiki/Fichier:Portrait_Najat_Vallaud-Belkacem-crop.jpg>
-
-
-
-
-
-
-
-
-
