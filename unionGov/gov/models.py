@@ -1,9 +1,15 @@
 from django.db import models
 from django.utils.crypto import get_random_string
+from django.utils import timezone
 
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.core.exceptions import ValidationError
+
+from datetime import timedelta
+
+# Delay before a governement is frozen.
+GRACE_PERIOD_BETWEEN_FREEZE = 10
 
 
 def get_new_ref():
@@ -67,6 +73,15 @@ class Config(models.Model):
         return "Config {}: {} pour {}".format(self.config_ref, self.candidate, self.position)
 
 
+@receiver(post_save, sender=Config)
+def update_date_field_for_ref(sender, instance, **kwargs):
+    current_config_ref = instance.config_ref
+
+    ConfigRef.objects.update(config_ref=current_config_ref,
+                     updated_at=timezone.now())
+
+    return True
+
 @receiver(pre_save, sender=Config)
 def check_config(sender, instance, **kwargs):
     """ Returns True if both Position and Candidate are new, for this configRef
@@ -77,6 +92,9 @@ def check_config(sender, instance, **kwargs):
     current_config_ref = instance.config_ref
     current_candidate = instance.candidate
     current_position = instance.position
+
+    if current_config_ref.updated_at - timezone.now() < timedelta(minutes=GRACE_PERIOD_BETWEEN_FREEZE):
+        raise ValidationError("Frozen government, cannot modify")
 
     # Get existing Config rows
     existing_rows = Config.objects.filter(config_ref=current_config_ref)
