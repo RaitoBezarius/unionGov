@@ -24,7 +24,9 @@ const styles: Styles = {
 
 const Header: FunctionComponent<EmptyRecord> = memo(() => (
   <div style={styles.container} className="p-4">
-    <Image src={HeaderImage} />
+    <a href="https://plusbellelapolitique.fr" target="_blank" rel="noopener">
+      <Image src={HeaderImage} />
+    </a>
     {/* <Typography style={styles.text} variant="h5">À nous de choisir !</Typography> */}
   </div>
 ));
