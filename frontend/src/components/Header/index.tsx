@@ -1,4 +1,3 @@
-import { Typography } from '@material-ui/core';
 import { CSSProperties, FunctionComponent, memo } from 'react';
 import theme from '../../theme';
 import { EmptyRecord } from '../../types';
@@ -24,7 +23,7 @@ const styles: Styles = {
 
 const Header: FunctionComponent<EmptyRecord> = memo(() => (
   <div style={styles.container} className="p-4">
-    <a href="https://plusbellelapolitique.fr" target="_blank" rel="noopener">
+    <a href="https://plusbellelapolitique.fr" target="_blank" rel="noreferrer">
       <Image src={HeaderImage} />
     </a>
     {/* <Typography style={styles.text} variant="h5">À nous de choisir !</Typography> */}
