@@ -19,7 +19,6 @@ in
   shell = pkgs.mkShell {
     SECRET_KEY = "gXizOjVKrh-gQAo345jObYyRNpb-4bbG5jZqaijf_J0";
     buildInputs = [
-      pkgs.raito-dev.myNixops
       pkgs.yarn2nix
       pkgs.poetry
       pkgs.nodejs
