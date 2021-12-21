@@ -5,7 +5,6 @@ import endpoint from '../endpoints.config';
 export const fetchNewConfigRefApi = () =>
   axios.post(`${endpoint.ApiBaseUrl}/api/configRefs/`, {
     params: {
-      save_date: null,
       user: null
     }
   });
