@@ -34,6 +34,10 @@ class ConfigRefSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConfigRef
         fields = ('id', 'config_ref', 'created_at', 'updated_at', 'user')
+        read_only_fields = ('created_at', 'updated_at')
+        extra_kwargs = {
+            'user': { 'write_only': True }
+        }
 
 class SConfigRefSerializer(serializers.ModelSerializer):
     class Meta:
