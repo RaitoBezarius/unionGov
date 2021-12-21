@@ -14,7 +14,7 @@ export type Props = {
 const CandidateItem: FunctionComponent<Props> = memo(({ imageUrl, label, websiteUrl }) => (
   <li className="flex-fill list-group-item d-flex justify-content-between align-items-center">
     <Typography className="col-10">
-      {websiteUrl ? (<a href={websiteUrl}>{label}</a>) : label}
+      {websiteUrl ? (<a href={websiteUrl} target="_blank" rel="noreferrer">{label}</a>) : label}
     </Typography>
     <img className="col-2" src={imageUrl} alt={label} />
     {/* <Image src={SlotImage} alt='Hexagone jaune pour accueillir les images de candidats' layout='responsive' className="" /> */}
