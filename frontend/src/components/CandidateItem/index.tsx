@@ -16,7 +16,7 @@ const CandidateItem: FunctionComponent<Props> = memo(({ imageUrl, label, website
     <Typography className="col-10">
       {websiteUrl ? (<a href={websiteUrl}>{label}</a>) : label}
     </Typography>
-    <img class="col-2" src={imageUrl} alt={label} />
+    <img className="col-2" src={imageUrl} alt={label} />
     {/* <Image src={SlotImage} alt='Hexagone jaune pour accueillir les images de candidats' layout='responsive' className="" /> */}
   </li>
 ));
