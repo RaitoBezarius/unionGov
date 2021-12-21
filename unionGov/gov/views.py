@@ -14,12 +14,15 @@ from .serializers import (CandidateSerializer, ConfigRefSerializer,
                           XConfigSerializer)
 
 
-class CandidateAPIView(viewsets.ModelViewSet):
+class CandidateAPIView(viewsets.ReadOnlyModelViewSet):
     serializer_class = CandidateSerializer
     queryset = Candidate.objects.all()
 
 
 class ConfigAPIView(viewsets.ModelViewSet):
+    # Do not enable: delete, neither partial update.
+    http_method_names = [m for m in viewsets.ModelViewSet.http_method_names
+                         if m not in ('delete', 'patch')]
     queryset = Config.objects.all()
     serializer_class = ConfigSerializer
     filter_backends = [DjangoFilterBackend]
@@ -34,13 +37,13 @@ class ConfigAPIView(viewsets.ModelViewSet):
         return super(ConfigAPIView, self).get_serializer(*args, **kwargs)
 
 
-class RichConfigAPIView(viewsets.ModelViewSet):
+class RichConfigAPIView(viewsets.ReadOnlyModelViewSet):
     queryset = Config.objects.all()
     serializer_class = RichConfigSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['config_ref']
 
-class XConfigAPIView(viewsets.ModelViewSet):
+class XConfigAPIView(viewsets.ReadOnlyModelViewSet):
     queryset = Config.objects.all()
     serializer_class = XConfigSerializer
     filter_backends = [DjangoFilterBackend]
@@ -48,18 +51,21 @@ class XConfigAPIView(viewsets.ModelViewSet):
 
 
 class ConfigRefAPIView(viewsets.ModelViewSet):
+    # Get only a reference
+    http_method_names = [m for m in viewsets.ModelViewSet.http_method_names
+                         if m in ('post')]
     serializer_class = ConfigRefSerializer
     queryset = ConfigRef.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['config_ref']
 
 
-class PositionAPIView(viewsets.ModelViewSet):
+class PositionAPIView(viewsets.ReadOnlyModelViewSet):
     serializer_class = PositionSerializer
     queryset = Position.objects.all().order_by('id')
 
 
-class UserAPIView(viewsets.ModelViewSet):
+class UserAPIView(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 

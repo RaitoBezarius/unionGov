@@ -77,8 +77,7 @@ class Config(models.Model):
 def update_date_field_for_ref(sender, instance, **kwargs):
     current_config_ref = instance.config_ref
 
-    ConfigRef.objects.update(config_ref=current_config_ref,
-                     updated_at=timezone.now())
+    ConfigRef.objects.filter(config_ref=current_config_ref).update(updated_at=timezone.now())
 
     return True
 
