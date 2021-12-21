@@ -6,7 +6,7 @@ from .models import Candidate, Config, ConfigRef, Position, User
 class CandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
-        fields = ('id', 'first_name', 'last_name', 'image_url')
+        fields = ('id', 'first_name', 'last_name', 'image_url', 'website_url')
 
 
 class PositionSerializer(serializers.ModelSerializer):
@@ -33,7 +33,7 @@ class RichConfigSerializer(serializers.ModelSerializer):
 class ConfigRefSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConfigRef
-        fields = ('id', 'config_ref', 'save_date', 'user')
+        fields = ('id', 'config_ref', 'created_at', 'updated_at', 'user')
 
 class SConfigRefSerializer(serializers.ModelSerializer):
     class Meta:

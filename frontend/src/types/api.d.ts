@@ -10,6 +10,7 @@ export type ApiCandidate = {
   first_name: string;
   last_name: string;
   image_url: string;
+  website_url?: string;
 };
 
 export type ApiGovernement = {

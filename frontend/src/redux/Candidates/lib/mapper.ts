@@ -8,12 +8,14 @@ export const mapApiToCandidate = ({
   id,
   first_name,
   last_name,
-  image_url
+  image_url,
+  website_url
 }: ApiCandidate): Candidate => ({
   id,
   firstName: first_name,
   lastName: last_name,
-  imageUrl: image_url
+  imageUrl: image_url,
+  websiteUrl: website_url
 })
 /* eslint-disable camelcase */
 

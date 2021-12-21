@@ -6,6 +6,7 @@ export type Candidate = {
   firstName: string;
   lastName: string;
   imageUrl: string;
+  websiteUrl?: string;
 };
 
 type ExtraEntityState = {

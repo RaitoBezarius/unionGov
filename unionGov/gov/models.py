@@ -21,11 +21,12 @@ class User(models.Model):
 class ConfigRef(models.Model):
     # long enough random string, to be set at generation
     config_ref = models.CharField(max_length=32, blank=True, unique=True)
-    save_date = models.DateTimeField('date saved', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
-        return "{} on {}".format(self.config_ref, self.save_date)
+        return "{}, created: {}, updated: {}".format(self.config_ref, self.created_at, self.updated_at)
 
     def save(self, *args, **kwargs):
         if not self.config_ref:
@@ -39,6 +40,7 @@ class Candidate(models.Model):
     last_name = models.CharField(max_length=32)
     image_file = models.ImageField(upload_to='img', blank=True, null=True)
     image_url = models.URLField(null=True, blank=True)
+    website_url = models.URLField(null=True, blank=True)
 
     def __str__(self) -> str:
         return "{} {}".format(self.first_name, self.last_name)

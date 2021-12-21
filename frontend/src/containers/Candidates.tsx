@@ -6,9 +6,10 @@ export type Props = {
   candidates?: Candidate[]
 }
 
-const mapper = ({ imageUrl, firstName, lastName }: Candidate): ItemProps => ({
+const mapper = ({ imageUrl, firstName, lastName, websiteUrl }: Candidate): ItemProps => ({
   label: `${firstName} ${lastName}`,
-  imageUrl
+  imageUrl,
+  websiteUrl
 })
 
 /**
