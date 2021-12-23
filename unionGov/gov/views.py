@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.templatetags.static import static
 from django.views.generic.list import ListView
 from django_filters.rest_framework import DjangoFilterBackend
 from PIL import Image
@@ -111,8 +112,10 @@ def square(image, size, fill_color=(0, 0, 0, 0)):
 
 def get_thumbnail(request, candidate_id, size=96):
     candidate = get_object_or_404(Candidate, pk=candidate_id)
-    background = square(Image.open(f"unionGov/media/{candidate.image_file}"), size)
-    foreground = square(Image.open("gov/templates/statics/thumbnail.png"), size)
+    background = square(
+        Image.open(f"{settings.MEDIA_ROOT}/{candidate.image_file}"), size
+    )
+    foreground = square(Image.open(f"{settings.STATIC_ROOT}/thumbnail.png"), size)
     background.paste(foreground, (0, 0), foreground)
     response = HttpResponse(content_type="image/png")
     background.save(response, "PNG")
