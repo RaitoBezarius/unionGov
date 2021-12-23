@@ -1,3 +1,7 @@
+from hashlib import sha512
+from os import path
+from pathlib import Path
+
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
@@ -102,13 +106,17 @@ def candidate(request, candidate_id):
     return render(request, "gov/candidate.html", {"candidate": candidate})
 
 
+BLACK = (0, 0, 0, 255)
+GREEN = (7, 115, 125, 255)
+TRANSPARENT = (0, 0, 0, 0)
+
 # Turn a given color in image into RGBA transparency
-def color2alpha(image, color=(7, 115, 125)):
+def color2alpha(image, color=GREEN):
     data = image.getdata()
     new_data = []
     for pixel in data:
         if pixel[0] == color[0] and pixel[1] == color[1] and pixel[2] == color[2]:
-            new_data.append((255, 255, 255, 0))
+            new_data.append(TRANSPARENT)
         else:
             new_data.append(pixel)
     alpha_image = Image.new("RGBA", image.size)
@@ -116,9 +124,10 @@ def color2alpha(image, color=(7, 115, 125)):
     return alpha_image
 
 
-# Resize and crop an image to make it fill a square
-# TODO: resize at right dimensions
-def square(image, size=256, fill_color=(0, 0, 0, 255)):
+SIZE = 190  # size of a condidate thumbnail
+
+# Resize an image to make it fit in a square
+def square(image, size=SIZE, fill_color=BLACK):
     x, y = image.size
     max_size = max(size, x, y)
     squared_image = Image.new("RGBA", (max_size, max_size), fill_color)
@@ -126,50 +135,63 @@ def square(image, size=256, fill_color=(0, 0, 0, 255)):
     return squared_image.resize((size, size), Image.ANTIALIAS)
 
 
+SEED = 0  # change me to invalidate thumbnail cache
+
 # Given a candidate ID return a profile picture thumbnail path
-def get_candidate_thumbnail_path(request, candidate_id):
+def get_candidate_thumbnail(candidate_id, size=SIZE, fill_color=BLACK):
     candidate = get_object_or_404(Candidate, pk=candidate_id)
-    # TODO: get thumbnail_path in MEDIA_ROOT from hash(candidate.image_file + version)
-    if True:  # TODO: if path not found load image_file
-        background = square(Image.open(f"{settings.MEDIA_ROOT}/{candidate.image_file}"))
-        # TODO: if fail load image from candidate.image_url?
+    hash = sha512(f"{candidate.image_file}{SEED}".encode("ASCII")).hexdigest()
+    path = Path(f"{settings.MEDIA_ROOT}/thumbnail/candidate/")
+    path.mkdir(parents=True, exist_ok=True)
+    thumbnail = Path(f"{path}/{hash}.png")
+    if not thumbnail.exists():
+        original = f"{settings.MEDIA_ROOT}/{candidate.image_file}"
+        background = Image.new("RGBA", (size, size), fill_color)
+        if candidate.image_file:
+            background = square(Image.open(original))
         foreground = square(Image.open(f"{settings.STATIC_ROOT}/thumbnail.png"))
         background.paste(foreground, (0, 0), foreground)
         image = color2alpha(background)
-        response = HttpResponse(content_type="image/png")
-        image.save(response, "PNG")  # TODO: save image in thumbnail_path
-    return response  # TODO: return thumbnail_path
+        image.save(thumbnail, "PNG")
+    print(thumbnail)
+    return thumbnail
 
 
 # Given a government ID return an image shareable on social media
 def generate_gov_thumbnail(request, gov_id):
-    pos = [
-        (360, 190),
-        (560, 190),
-        (60, 360),
-        (260, 360),
-        (460, 360),
-        (660, 360),
-        (860, 360),
-        (160, 530),
-        (360, 530),
-        (560, 530),
-        (760, 530),
-        (60, 600),
-        (260, 600),
-        (460, 600),
-        (660, 600),
-        (860, 600),
-    ]
-    # TODO: big green empty layer
-    for i, gov_member in enumerate(Config.objects.filter(config_ref=gov_id)):
-        # TODO: sort gov_member by gov_member.position?
-        print(gov_member)
-        # TODO: paste get_candidate_thumbnail_path(gov_member.candidate.id) at pos[i]
-        # TODO: write text gov_member.position at pos[i]?
-    image = Image.open(f"{settings.STATIC_ROOT}/governement.png")
-    # TODO: paste last layer
+    hash = sha512(f"{gov_id + SEED}".encode("ASCII")).hexdigest()
+    path = Path(f"{settings.MEDIA_ROOT}/thumbnail/gov/")
+    path.mkdir(parents=True, exist_ok=True)
+    thumbnail = Path(f"{path}/{hash}.png")
+    if not thumbnail.exists():
+        pos = [
+            (350, 190),
+            (550, 190),
+            (50, 360),
+            (250, 360),
+            (450, 360),
+            (650, 360),
+            (850, 360),
+            (150, 530),
+            (350, 530),
+            (550, 530),
+            (750, 530),
+            (50, 700),
+            (250, 700),
+            (450, 700),
+            (650, 700),
+            (850, 700),
+        ]
+        image = Image.open(f"{settings.STATIC_ROOT}/governement.png")
+        background = Image.new("RGBA", image.size, (7, 115, 125, 255))
+        for i, gov_member in enumerate(Config.objects.filter(config_ref=gov_id)):
+            # TODO: sort gov_member by gov_member.position?
+            foreground = Image.open(get_candidate_thumbnail(gov_member.candidate.id))
+            background.paste(foreground, pos[i], foreground)
+            # TODO: write text gov_member.position at pos[i]?
+        background.paste(image, (0, 0), image)
+        background.save(thumbnail, "PNG")
     response = HttpResponse(content_type="image/png")
+    image = Image.open(thumbnail)
     image.save(response, "PNG")
-    # TODO: cache image?
     return response
