@@ -117,6 +117,7 @@ def color2alpha(image, color=(7, 115, 125)):
 
 
 # Resize and crop an image to make it fill a square
+# TODO: resize at right dimensions
 def square(image, size=256, fill_color=(0, 0, 0, 255)):
     x, y = image.size
     max_size = max(size, x, y)
@@ -125,13 +126,50 @@ def square(image, size=256, fill_color=(0, 0, 0, 255)):
     return squared_image.resize((size, size), Image.ANTIALIAS)
 
 
-# Given a candidate ID return a profile picture thumbnail
-def get_thumbnail(request, candidate_id):
+# Given a candidate ID return a profile picture thumbnail path
+def get_candidate_thumbnail_path(request, candidate_id):
     candidate = get_object_or_404(Candidate, pk=candidate_id)
-    background = square(Image.open(f"{settings.MEDIA_ROOT}/{candidate.image_file}"))
-    foreground = square(Image.open(f"{settings.STATIC_ROOT}/thumbnail.png"))
-    background.paste(foreground, (0, 0), foreground)
-    image = color2alpha(background)
+    # TODO: get thumbnail_path in MEDIA_ROOT from hash(candidate.image_file + version)
+    if True:  # TODO: if path not found load image_file
+        background = square(Image.open(f"{settings.MEDIA_ROOT}/{candidate.image_file}"))
+        # TODO: if fail load image from candidate.image_url?
+        foreground = square(Image.open(f"{settings.STATIC_ROOT}/thumbnail.png"))
+        background.paste(foreground, (0, 0), foreground)
+        image = color2alpha(background)
+        response = HttpResponse(content_type="image/png")
+        image.save(response, "PNG")  # TODO: save image in thumbnail_path
+    return response  # TODO: return thumbnail_path
+
+
+# Given a government ID return an image shareable on social media
+def generate_gov_thumbnail(request, gov_id):
+    pos = [
+        (360, 190),
+        (560, 190),
+        (60, 360),
+        (260, 360),
+        (460, 360),
+        (660, 360),
+        (860, 360),
+        (160, 530),
+        (360, 530),
+        (560, 530),
+        (760, 530),
+        (60, 600),
+        (260, 600),
+        (460, 600),
+        (660, 600),
+        (860, 600),
+    ]
+    # TODO: big green empty layer
+    for i, gov_member in enumerate(Config.objects.filter(config_ref=gov_id)):
+        # TODO: sort gov_member by gov_member.position?
+        print(gov_member)
+        # TODO: paste get_candidate_thumbnail_path(gov_member.candidate.id) at pos[i]
+        # TODO: write text gov_member.position at pos[i]?
+    image = Image.open(f"{settings.STATIC_ROOT}/governement.png")
+    # TODO: paste last layer
     response = HttpResponse(content_type="image/png")
     image.save(response, "PNG")
+    # TODO: cache image?
     return response
