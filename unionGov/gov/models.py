@@ -45,7 +45,7 @@ class Candidate(models.Model):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     image_file = models.ImageField(upload_to='img', blank=True, null=True)
-    image_url = models.CharField(null=True, blank=True)
+    image_url = models.CharField(null=True, blank=True, max_length=255)
     website_url = models.URLField(null=True, blank=True)
 
     def __str__(self) -> str:
