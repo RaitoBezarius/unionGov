@@ -145,15 +145,14 @@ def get_candidate_thumbnail(candidate_id, size=SIZE, fill_color=BLACK):
     path.mkdir(parents=True, exist_ok=True)
     thumbnail = Path(f"{path}/{hash}.png")
     if not thumbnail.exists():
-        original = f"{settings.MEDIA_ROOT}/{candidate.image_file}"
+        original = Path(f"{settings.MEDIA_ROOT}/{candidate.image_file}")
         background = Image.new("RGBA", (size, size), fill_color)
-        if candidate.image_file:
+        if candidate.image_file and original.exists():
             background = square(Image.open(original))
         foreground = square(Image.open(f"{settings.STATIC_ROOT}/thumbnail.png"))
         background.paste(foreground, (0, 0), foreground)
         image = color2alpha(background)
         image.save(thumbnail, "PNG")
-    print(thumbnail)
     return thumbnail
 
 
