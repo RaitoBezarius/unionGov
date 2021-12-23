@@ -91,7 +91,6 @@ const Government: FunctionComponent<GovernmentProps> = ({ hydrated }) => {
       items={items}
       thumbnailURL={mkThumbnailUrl(params.id)}
       permanentURL={mkPermanentUrl(params.id)}
-      noShare
     />
   );
 };

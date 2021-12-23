@@ -8,14 +8,13 @@ export type Props = {
   items?: ItemProps[];
   permanentURL?: string;
   thumbnailURL?: string;
-  noShare?: boolean;
 };
 
 const EMPTY_ITEMS: NonNullable<Props['items']> = [];
 
 /** @TODO handle loading state (placeholders would be great) */
 const Government: FunctionComponent<Props> = memo(
-  ({ items = EMPTY_ITEMS, thumbnailURL, permanentURL, noShare }) => (
+  ({ items = EMPTY_ITEMS, thumbnailURL, permanentURL }) => (
     <div className="container mt-4 p-0 justify-content-center">
       <Head>
         <meta property="og:title" content="Mon gouvernement idéal !" />
@@ -56,11 +55,9 @@ const Government: FunctionComponent<Props> = memo(
           </ul>
         </div>
       </div>
-      {!noShare && (
-        <div className="row align-items-center justify-content-center mt-4">
-          <ShareButton />
-        </div>
-      )}
+      <div className="row align-items-center justify-content-center mt-4">
+        <ShareButton />
+      </div>
     </div>
   )
 );
