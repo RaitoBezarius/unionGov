@@ -102,7 +102,22 @@ def candidate(request, candidate_id):
     return render(request, "gov/candidate.html", {"candidate": candidate})
 
 
-def square(image, size, fill_color=(0, 0, 0, 0)):
+# Turn a given color in image into RGBA transparency
+def color2alpha(image, color=(7, 115, 125)):
+    data = image.getdata()
+    new_data = []
+    for pixel in data:
+        if pixel[0] == color[0] and pixel[1] == color[1] and pixel[2] == color[2]:
+            new_data.append((255, 255, 255, 0))
+        else:
+            new_data.append(pixel)
+    alpha_image = Image.new("RGBA", image.size)
+    alpha_image.putdata(new_data)
+    return alpha_image
+
+
+# Resize and crop an image to make it fill a square
+def square(image, size=256, fill_color=(0, 0, 0, 255)):
     x, y = image.size
     max_size = max(size, x, y)
     squared_image = Image.new("RGBA", (max_size, max_size), fill_color)
@@ -110,13 +125,13 @@ def square(image, size, fill_color=(0, 0, 0, 0)):
     return squared_image.resize((size, size), Image.ANTIALIAS)
 
 
-def get_thumbnail(request, candidate_id, size=96):
+# Given a candidate ID return a profile picture thumbnail
+def get_thumbnail(request, candidate_id):
     candidate = get_object_or_404(Candidate, pk=candidate_id)
-    background = square(
-        Image.open(f"{settings.MEDIA_ROOT}/{candidate.image_file}"), size
-    )
-    foreground = square(Image.open(f"{settings.STATIC_ROOT}/thumbnail.png"), size)
+    background = square(Image.open(f"{settings.MEDIA_ROOT}/{candidate.image_file}"))
+    foreground = square(Image.open(f"{settings.STATIC_ROOT}/thumbnail.png"))
     background.paste(foreground, (0, 0), foreground)
+    image = color2alpha(background)
     response = HttpResponse(content_type="image/png")
-    background.save(response, "PNG")
+    image.save(response, "PNG")
     return response
