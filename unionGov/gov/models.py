@@ -1,19 +1,18 @@
-from django.db import models
-from django.utils.crypto import get_random_string
-from django.utils import timezone
-
-from django.db.models.signals import pre_save, post_save
-from django.dispatch import receiver
-from django.core.exceptions import ValidationError
-
 from datetime import timedelta
+
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+from django.utils import timezone
+from django.utils.crypto import get_random_string
 
 # Delay before a governement is frozen.
 GRACE_PERIOD_BETWEEN_FREEZE = 10
 
 
 def get_new_ref():
-    """ Generate a new config ref """
+    """Generate a new config ref"""
     return get_random_string(length=32)
 
 
@@ -32,7 +31,9 @@ class ConfigRef(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
-        return "{}, created: {}, updated: {}".format(self.config_ref, self.created_at, self.updated_at)
+        return "{}, created: {}, updated: {}".format(
+            self.config_ref, self.created_at, self.updated_at
+        )
 
     def save(self, *args, **kwargs):
         if not self.config_ref:
@@ -44,7 +45,7 @@ class ConfigRef(models.Model):
 class Candidate(models.Model):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
-    image_file = models.ImageField(upload_to='img', blank=True, null=True)
+    image_file = models.ImageField(upload_to="img", blank=True, null=True)
     image_url = models.CharField(null=True, blank=True, max_length=255)
     website_url = models.URLField(null=True, blank=True)
 
@@ -52,8 +53,7 @@ class Candidate(models.Model):
         return "{} {}".format(self.first_name, self.last_name)
 
     def save(self, *args, **kwargs):
-        if self.image_url is None:
-            self.image_url = self.image_file.url
+        self.image_url = self.image_file.url
         super().save(*args, **kwargs)
 
 
@@ -70,20 +70,25 @@ class Config(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
-        return "Config {}: {} pour {}".format(self.config_ref, self.candidate, self.position)
+        return "Config {}: {} pour {}".format(
+            self.config_ref, self.candidate, self.position
+        )
 
 
 @receiver(post_save, sender=Config)
 def update_date_field_for_ref(sender, instance, **kwargs):
     current_config_ref = instance.config_ref
 
-    ConfigRef.objects.filter(config_ref=current_config_ref).update(updated_at=timezone.now())
+    ConfigRef.objects.filter(config_ref=current_config_ref).update(
+        updated_at=timezone.now()
+    )
 
     return True
 
+
 @receiver(pre_save, sender=Config)
 def check_config(sender, instance, **kwargs):
-    """ Returns True if both Position and Candidate are new, for this configRef
+    """Returns True if both Position and Candidate are new, for this configRef
 
     If not True raises a custom exception
     """
@@ -92,7 +97,9 @@ def check_config(sender, instance, **kwargs):
     current_candidate = instance.candidate
     current_position = instance.position
 
-    if current_config_ref.updated_at - timezone.now() > timedelta(minutes=GRACE_PERIOD_BETWEEN_FREEZE):
+    if current_config_ref.updated_at - timezone.now() > timedelta(
+        minutes=GRACE_PERIOD_BETWEEN_FREEZE
+    ):
         raise ValidationError("Frozen government, cannot modify")
 
     # Get existing Config rows
@@ -100,12 +107,12 @@ def check_config(sender, instance, **kwargs):
 
     # Check distinct from values in instance
     for row in existing_rows:
-        if (row.candidate.id == current_candidate.id):
-            if (row.id != current_id):
+        if row.candidate.id == current_candidate.id:
+            if row.id != current_id:
                 raise ValidationError("Duplicate candidate in Config")
 
-        if (row.position.id == current_position.id):
-            if (row.id != current_id):
+        if row.position.id == current_position.id:
+            if row.id != current_id:
                 raise ValidationError("Duplicate position in Config")
 
     return True
