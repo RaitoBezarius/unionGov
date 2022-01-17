@@ -14,7 +14,8 @@ const styles: Styles = {
     backgroundColor: theme.palette.primary.main,
     borderBottomWidth: 0.5,
     borderBottomColor: theme.palette.secondary.main,
-    borderBottomStyle: 'solid'
+    borderBottomStyle: 'solid',
+    margin: '0 auto'
   },
   text: {
     color: '#fff'
