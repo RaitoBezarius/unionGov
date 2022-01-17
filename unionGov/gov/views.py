@@ -26,7 +26,7 @@ from .serializers import (
 
 class CandidateAPIView(viewsets.ReadOnlyModelViewSet):
     serializer_class = CandidateSerializer
-    queryset = Candidate.objects.all()
+    queryset = Candidate.objects.filter(deleted=False).all()
 
 
 class ConfigAPIView(viewsets.ModelViewSet):
@@ -96,14 +96,10 @@ class PositionListView(ListView):
 class CandidateListView(ListView):
     model = Candidate
     paginate_by = 20
+    queryset = Candidate.objects.filter(deleted=False).all()
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)
-
-
-def candidate(request, candidate_id):
-    candidate = get_object_or_404(Candidate, pk=candidate_id)
-    return render(request, "gov/candidate.html", {"candidate": candidate})
 
 
 BLACK = (0, 0, 0, 255)

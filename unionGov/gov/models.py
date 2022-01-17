@@ -48,12 +48,14 @@ class Candidate(models.Model):
     image_file = models.ImageField(upload_to="img", blank=True, null=True)
     image_url = models.CharField(null=True, blank=True, max_length=255)
     website_url = models.URLField(null=True, blank=True)
+    deleted = models.BooleanField(default=False)  # Soft deletion
 
     def __str__(self) -> str:
         return "{} {}".format(self.first_name, self.last_name)
 
     def save(self, *args, **kwargs):
-        self.image_url = self.image_file.url
+        if self.image_file is not None and self.image_file:
+            self.image_url = self.image_file.url
         super().save(*args, **kwargs)
 
 
