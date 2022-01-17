@@ -9,7 +9,9 @@ import { governmentSelector } from '../redux/Government/selectors'
 import { setGovernmentById } from '../redux/Government/effects';
 import { ConfigState } from '../redux/Config/state';
 import { GovernmentState } from '../redux/Government/state';
-export type Props = EmptyRecord;
+export type Props = {
+  shareLink?: string;
+};
 
 const mkPrimaryLink = (id: number | undefined) => `${process.env.NEXT_PUBLIC_FRONTEND_BASE_URL}/${id}`
 
@@ -17,7 +19,7 @@ const mkPrimaryLink = (id: number | undefined) => `${process.env.NEXT_PUBLIC_FRO
  * ShareButton container
  * Handles what to trigger when the optional Button is clicked on
  */
-const ShareButton: FunctionComponent<Props> = () => {
+const ShareButton: FunctionComponent<Props> = (props: Props) => {
   const missingCount = useMissingGovernmentPositionCount();
   const dispatch = useAppDispatch()
   const [isOpen, setIsOpen] = useState(false)
@@ -27,11 +29,14 @@ const ShareButton: FunctionComponent<Props> = () => {
   const { id } = config
   const handleShare = useCallback(() => {
     setIsOpen(!isOpen)
-    dispatch(setGovernmentById({ config, governement }))
-    if (id) {
-      setShareLink(mkPrimaryLink(id))
+    // Do not reshare already shared governments.
+    if (!props.shareLink) {
+      dispatch(setGovernmentById({ config, governement }))
+      if (id) {
+        setShareLink(mkPrimaryLink(id))
+      }
     }
-  }, [id, governement, isOpen]);
+  }, [id, governement, isOpen, props.shareLink]);
 
   const onCopy = useCallback(() => {
     navigator.clipboard.writeText(mkPrimaryLink(id))
@@ -44,7 +49,7 @@ const ShareButton: FunctionComponent<Props> = () => {
       onShare={handleShare}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      shareLink={shareLink}
+      shareLink={props.shareLink || shareLink}
       onCopy={onCopy}
     />
   );

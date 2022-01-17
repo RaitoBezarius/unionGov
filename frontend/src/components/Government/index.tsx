@@ -56,7 +56,7 @@ const Government: FunctionComponent<Props> = memo(
         </div>
       </div>
       <div className="row align-items-center justify-content-center mt-4">
-        <ShareButton />
+        <ShareButton shareLink={permanentURL} />
       </div>
     </div>
   )
