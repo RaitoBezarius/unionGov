@@ -37,7 +37,7 @@ in
 
     #deployment.targetHost = "uniongov.v6.lahfa.xyz";
 
-    security.acme.email = "ryan@lahfa.xyz";
+    security.acme.defaults.email = "ryan@lahfa.xyz";
     security.acme.acceptTerms = true;
 
     services.nextjs.uniongov = {
@@ -59,8 +59,10 @@ in
       settingsModule = "unionGov.settings";
       port = 8000;
       environment = {
+        DEBUG = "true";
         FRONTEND_URL = fullLocation;
         DATABASE_URL = "sqlite:///var/lib/uniongov/db.sqlite";
+        STATIC_ROOT = toString project.backend.static;
         MEDIA_ROOT = "/var/lib/uniongov/uploads";
         ALLOWED_HOSTS = "127.0.0.1,localhost,${domain},${lib.concatStringsSep "," extraDomains}";
         CSRF_TRUSTED_ORIGINS = lib.concatStringsSep "," fullLocations;
@@ -92,6 +94,19 @@ in
         locations."/api/" = {
           proxyPass = "http://localhost:8000/"; # Leading slash is necessary to strip /api
         };
+        locations."/gov" = {
+          proxyPass = "http://localhost:8000"; # Leading slash is necessary to strip /api
+        };
+        locations."@maintenance" = {
+          extraConfig = ''
+            rewrite ^(.*)$ ${./maintenance.html} break;
+          '';
+        };
+
+        extraConfig = ''
+          error_page 503 @maintenance;
+          error_page 502 =503;
+        '';
       };
     };
   };
