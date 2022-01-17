@@ -21,13 +21,11 @@ const Footer: FunctionComponent<EmptyRecord> = memo(() => (
         Ce site est un projet parallèle à la{' '}
         <Link rel="noopener" href="https://primairepopulaire.fr/">
           Primaire Populaire
-        </Link>
-        . Sur le site principal vous pouvez voir la démarche du projet en
-        détail.
+        </Link>.
       </Typography>
 
       <Typography align="justify">
-        Vous pouvez voir les crédits à <NextLink href='/credits'>cette page</NextLink>.
+        <NextLink href='/credits'>Mentions légales</NextLink>
       </Typography>
 
       <Typography align="justify">
