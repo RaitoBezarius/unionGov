@@ -50,7 +50,7 @@ const CandidateSelect: FunctionComponent<Props> = memo(({ current, options, onCh
       value={current || undefined}
       controlShouldRenderValue={!!current}
       theme={selectTheme}
-      isSearchable={true}
+      isSearchable={false}
     />
   );
 });
