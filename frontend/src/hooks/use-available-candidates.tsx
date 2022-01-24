@@ -10,14 +10,13 @@ type TaggedCandidate = Candidates[0] & {
   isAvailable: boolean;
 }
 type Gov = ReturnType<typeof governmentSelector>;
-const SOMEONE_ELSE = 'Quelqu\'un d\'autre';
 
 const mapper = (candidates: Candidates, userGov: Gov): TaggedCandidate[] => {
   const govCandidateIds = Object.values(userGov);
 
   return candidates.map(can => ({
     ...can,
-    isAvailable: !govCandidateIds.includes(can.id) || `${can.firstName} ${can.lastName}` === SOMEONE_ELSE
+    isAvailable: !govCandidateIds.includes(can.id)
   }));
 }
 
