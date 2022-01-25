@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
-import { FunctionComponent, memo } from 'react';
 import Head from 'next/head';
+import { FunctionComponent, memo } from 'react';
 import Item, { Props as ItemProps } from '../../containers/GovernmentItem';
 import ShareButton from '../../containers/ShareButton';
 
@@ -20,7 +20,7 @@ const Government: FunctionComponent<Props> = memo(
         <meta property="og:title" content="Mon gouvernement idéal !" />
         <meta property="og:type" content="website" />
         {permanentURL && <meta property="og:url" content={permanentURL} />}
-        {thumbnailURL && <meta property="og:image" content={thumbnailURL} />}
+        <meta property="og:image" content={thumbnailURL || '/public/social.png' } />
         <meta
           property="og:description"
           content="Composez vous aussi votre gouvernement idéal !"
